@@ -73,13 +73,13 @@ def renameFiles(targetDirectory, currentExt, newExt):
 def main():
     homeDirectory=os.path.expanduser("~")
     currentDirectory=os.getcwd()
-    currentUser=os.getenv('USERNAME')           # change to 'USER' for linux
+    currentUser=os.getenv('USER')           # change to 'USER' for linux
     print("Your currently directory is:", currentDirectory)
     print("Your home directory is:", homeDirectory)
     print("Your current username is:", currentUser)
-    createDir(homeDirectory+"\CITSpring2024"+currentUser) # change slash for linux
-    getType(homeDirectory+"\CITSpring2024"+currentUser)
-    os.chdir(homeDirectory+"\CITSpring2024"+currentUser)
+    createDir(homeDirectory+"/CITSpring2024"+currentUser) # change slash for linux
+    getType(homeDirectory+"/CITSpring2024"+currentUser)
+    os.chdir(homeDirectory+"/CITSpring2024"+currentUser)
     newDirectory = os.getcwd()
     print("Your current directory now is", newDirectory)
     input0 = input("Name the files you want to create")
@@ -102,6 +102,10 @@ def main():
     createSubDirectories(input4, input3)
     displayContents(newDirectory)
     input5 = input("Enter a new extension for your files")
+    while input5 not in ext:
+        print("Invalid extension, please try again")
+        input5 = input("Enter a new extension for your files")
+
     renameFiles(newDirectory, input2, input5)
     displayContents(newDirectory)
 main()
