@@ -1,3 +1,5 @@
+#!/usr/bin/python3
+
 import os
 
 def exists(path):           #checks is a path exists
@@ -15,61 +17,91 @@ def renameFile(fileName, newName):
     else:
         print("Error: file not found ")
 
-
 def createDir(name):
     if not os.path.isdir(name):
         os.makedirs(name)
-
-def isAllwoed(extention):               # WIP
-    ext=["txt","png","doc","dat"]
-    if extention in ext:
-        return True
-    else:
-        return False
 
 
 def getType(fileOrPath):                        # currently requires the full, absolute path to work correctly
 
     if os.path.isdir(fileOrPath):
-        print("This is a directory")
+        a = "Directory"
     elif os.path.isfile(fileOrPath):
-        print("This is a file")
+        a = "File"
     else:
-        print("Not a file or directory")
-
+        a = "not a file or directory"
+    return a
 
 def displayContents(directoryName):      #lists everything in a selected directory via a for loop
+
+
     if exists(directoryName):
+        print('%-25s %-25s' % ('Name', 'Type'))
+        print('%-25s %-25s' % ('-----', '-----'))
         contents=os.listdir(directoryName)
         for content in contents:
-            print(content)
+
+            print('%-25s %-25s' % (content, getType(content)))
     else:
         print("Error: directory not found")
+
+
+def createFiles(fileNamePrefix, numOfFiles, ext):
+    x = 0
+    y = 1
+    while x < numOfFiles:
+        f = open(f'{fileNamePrefix}_{y}.{ext}', 'a')
+        x += 1
+        y += 1
+        f.close
+def createSubDirectories(directoryName, numberToCreate):
+    x = 0
+    y = 1
+    while x < numberToCreate:
+        os.mkdir(directoryName+str(y))
+        x += 1
+        y += 1
+
+def renameFiles(targetDirectory, currentExt, newExt):
+    for files in os.listdir(targetDirectory):
+        base, ext = os.path.splitext(files)
+        if os.path.isfile(files):
+            os.rename(files, base + "." + newExt)
+    print('Renamed all accepted files')
+
+
 def main():
     homeDirectory=os.path.expanduser("~")
     currentDirectory=os.getcwd()
     currentUser=os.getenv('USERNAME')           # change to 'USER' for linux
-    print(currentDirectory)
-    print(homeDirectory)
-    print(currentUser)
-    createDir(homeDirectory+"\CITSpring2024"+currentUser)    # change slash for linux
-    print(currentDirectory)
-    run=True
-    files = []
-    while run:
-
-        userin=input("Enter any number of file names to create. Enter the file extention you want them all to be to finish: ")
-        files.append(userin)
-        if isAllwoed(userin):
-            run=False
-
-    ext=files[-1]
-    files.pop()
-    for file in files:
-        print(file)
-       # os.open(homeDirectory+"\CITSpring2024"+currentUser,4)          having issues with this on windows, need to try on vm
-
-
-
-
+    print("Your currently directory is:", currentDirectory)
+    print("Your home directory is:", homeDirectory)
+    print("Your current username is:", currentUser)
+    createDir(homeDirectory+"\CITSpring2024"+currentUser) # change slash for linux
+    getType(homeDirectory+"\CITSpring2024"+currentUser)
+    os.chdir(homeDirectory+"\CITSpring2024"+currentUser)
+    newDirectory = os.getcwd()
+    print("Your current directory now is", newDirectory)
+    input0 = input("Name the files you want to create")
+    input1 = int(input("How many files would you like to make?  "))
+    while input1 <= 0:
+        print("You cannot use negative numbers or zero, try again")
+        input1 = int(input("How many files would you like to make?  "))
+    input2 = input("What extension would you like these files to be?")
+    ext = ["txt", "png", "doc", "dat"]
+    while input2 not in ext:
+        print("Invalid extension, please try again")
+        input2 = input("What extension would you like these files to be?")
+    input4 = input("Name the subfolders you want to create")
+    input3 = int(input("How many subdirectories would you like to make?   "))
+    while input3 < 0:
+        print("You cannot use negative numbers or zero, try again")
+        input3 = int(input("How many subdirectories would you like to make?   "))
+    print(newDirectory)
+    createFiles(input0, input1, input2)
+    createSubDirectories(input4, input3)
+    displayContents(newDirectory)
+    input5 = input("Enter a new extension for your files")
+    renameFiles(newDirectory, input2, input5)
+    displayContents(newDirectory)
 main()
