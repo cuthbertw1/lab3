@@ -102,6 +102,10 @@ def main():
     createSubDirectories(input4, input3)
     displayContents(newDirectory)
     input5 = input("Enter a new extension for your files")
+    while input5 not in ext:
+        print("Invalid extension, please try again")
+        input5 = input("Enter a new extension for your files")
+
     renameFiles(newDirectory, input2, input5)
     displayContents(newDirectory)
 main()
