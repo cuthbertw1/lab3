@@ -82,29 +82,29 @@ def main():
     os.chdir(homeDirectory+"/CITSpring2024"+currentUser)
     newDirectory = os.getcwd()
     print("Your current directory now is", newDirectory)
-    input0 = input("Name the files you want to create")                     # user file creation
-    input1 = int(input("How many files would you like to make?  "))
+    input0 = input("Name the files you want to create: ")                     # user file creation
+    input1 = int(input("How many files would you like to make:  "))
     while input1 <= 0:
         print("You cannot use negative numbers or zero, try again")
-        input1 = int(input("How many files would you like to make?  "))
-    input2 = input("What extension would you like these files to be?")
+        input1 = int(input("How many files would you like to make:  "))
+    input2 = input("What extension would you like these files to be: ")
     ext = ["txt", "png", "doc", "dat"]
     while input2 not in ext:
         print("Invalid extension, please try again")
-        input2 = input("What extension would you like these files to be?")
-    input4 = input("Name the subfolders you want to create")
-    input3 = int(input("How many subdirectories would you like to make?   "))
+        input2 = input("What extension would you like these files to be: ")
+    input4 = input("Name the subfolders you want to create: ")
+    input3 = int(input("How many subdirectories would you like to make:   "))
     while input3 <= 0:                                                                # negative number input validation
         print("You cannot use negative numbers or zero, try again")
-        input3 = int(input("How many subdirectories would you like to make?   "))
+        input3 = int(input("How many subdirectories would you like to make:   "))
     print(newDirectory)
     createFiles(input0, input1, input2)
     createSubDirectories(input4, input3)
     displayContents(newDirectory)
-    input5 = input("Enter a new extension for your files")
+    input5 = input("Enter a new extension for your files: ")
     while input5 not in ext:                                                       # file extension validation
         print("Invalid extension, please try again")
-        input5 = input("Enter a new extension for your files")
+        input5 = input("Enter a new extension for your files: ")
 
     renameFiles(newDirectory, input2, input5)
     displayContents(newDirectory)
